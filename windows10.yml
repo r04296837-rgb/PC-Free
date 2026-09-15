@@ -21,7 +21,8 @@ services:
       PASSWORD: ${WINDOWS_PASSWORD}
       RAM_SIZE: "6G"
       CPU_CORES: "2"
-      DISK_SIZE: "30G"
+      DISK_SIZE: "30G" 
+      KVM: "N"
     cap_add:
       - NET_ADMIN
     ports:
