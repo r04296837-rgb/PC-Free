@@ -1,33 +1,27 @@
 # PC-Free - Windows 10/11 in a Docker container
-# Optimized for GitHub Codespaces (no KVM, limited resources)
-#
-# Usage:
-#   1. Copy .env.example to .env and fill in your credentials
-#   2. Run: docker-compose -f windows10.yml up
-#   3. Open port 8006 in the browser (noVNC interface)
-#
-# Note: GitHub Codespaces does not expose /dev/kvm. Windows will run
-# in software emulation (QEMU TCG), which is slower than hardware
-# virtualization. For faster performance, use a VPS with nested
-# virtualization enabled.
+# KVM-enabled with host networking
 
 services:
   windows:
     image: dockurr/windows
     container_name: windows
+    network_mode: host
     environment:
       VERSION: "10"
       USERNAME: ${WINDOWS_USERNAME}
       PASSWORD: ${WINDOWS_PASSWORD}
-      RAM_SIZE: "6G"
+      RAM_SIZE: "4G"
       CPU_CORES: "2"
-      DISK_SIZE: "30G" 
-      KVM: "N"
+      DISK_SIZE: "30G"
+      DNS: "8.8.8.8"
     cap_add:
       - NET_ADMIN
-    ports:
-      - "8006:8006"
-      - "3389:3389/tcp"
+    devices:
+      - "/dev/kvm:/dev/kvm"
+      - "/dev/net/tun:/dev/net/tun"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     volumes:
       - windows-data:/storage
       - windows-shared:/shared
