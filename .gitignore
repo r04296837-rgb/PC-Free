@@ -1,0 +1,20 @@
+# Environment variables (contains secrets)
+.env
+.env.*
+!.env.example
+
+# Docker
+docker-data/
+*.log
+
+# Node.js (যদি ব্যবহার করেন)
+node_modules/
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
